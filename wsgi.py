@@ -1,4 +1,4 @@
-from server import shadowdashapp
+from server import shadowdashapp as application
 
 if __name__ == "__main__":
-    shadowdashapp.run()
+    application.run()
