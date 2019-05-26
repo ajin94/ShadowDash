@@ -33,7 +33,6 @@ def shadowdash():
 
 @shadowdashapp.route('/shadowdashsignups')
 def shadowdashsignups():
-    import pdb; pdb.set_trace()
     user_data_dict = {}
     signups_query = """SELECT u.id, ac.type, u.fname, u.sname, u.gender, u.dob, 
     u.email, u.phone_number, u.house_apt, u.district, u.city, u.state, u.pin, 
