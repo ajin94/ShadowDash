@@ -1,0 +1,70 @@
+{% extends 'template_base/DashBase.html' %}
+
+{% set active_page = "shadow_dash_comments" %}
+
+{% block dash_body %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">User Sign Ups</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class=" text-primary">
+                            <th>
+                                # ID
+                            </th>
+                            <th>
+                                Account Type
+                            </th>
+                            <th>
+                                First Name
+                            </th>
+                            <th>
+                                Second Name
+                            </th>
+                            <th>
+                                Gender
+                            </th>
+                            <th>
+                                DOB
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th>
+                                Phone
+                            </th>
+                            <th>
+                                Address Line 1
+                            </th>
+                            <th>
+                                Address Line 2
+                            </th>
+                        </thead>
+                        <tbody>
+                        {% if logins %}
+                            {% for key, value in logins.items() %}
+                            <tr>
+                                <td>{{ key }}</td>
+                                <td>{{ value[0] }}</td>
+                                <td>{{ value[1] }}</td>
+                                <td>{{ value[2] }}</td>
+                                <td>{{ value[3] }}</td>
+                                <td>{{ value[4] }}</td>
+                                <td>{{ value[5] }}</td>
+                                <td>{{ value[6] }}</td>
+                                <td>{{ value[7] }}</td>
+                                <td>{{ value[8] }}</td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
