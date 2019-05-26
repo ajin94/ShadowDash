@@ -14,7 +14,7 @@ csrf = CsrfProtect()
 csrf.init_app(shadowdashapp)
 
 
-@shadowdashapp.route('/shadowdash')
+@shadowdashapp.route('/')
 def shadowdash():
     comment_count_query = "SELECT count(*) FROM user"
     try:
