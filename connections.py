@@ -3,7 +3,8 @@ import MySQLdb
 DATABASE_MAP = {
     'NSI': 'nsinteriors',
     'SF': 'shadowfashion',
-    'DASH': 'dashboard'
+    'DASH': 'dashboard',
+    'SFDASH': 'sfadmin'
 }
 
 

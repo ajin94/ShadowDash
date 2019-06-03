@@ -1,9 +1,9 @@
-CREATE DATABASE `dashboard`;
+CREATE DATABASE `sfadmin`;
 
-USE `dashboard`;
+USE `sfadmin`;
 
 
-CREATE TABLE `users` (
+CREATE TABLE `admin_users` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
   `username` VARCHAR(100),
   `password` VARCHAR(100),

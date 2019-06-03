@@ -1,10 +1,12 @@
 # import json, os, shutil
-from flask import Flask, request
-from flask import render_template
+from flask import Flask, request, session, url_for
+from flask import render_template, redirect
 from flask_wtf.csrf import CsrfProtect
 from connections import get_connection_to
+import json
 # import traceback
 # from PIL import Image
+from decorators import login_required
 
 shadowdashapp = Flask(__name__)
 shadowdashapp.secret_key = '6wfwef6AqwdwqdSDW67waedccscaQDWD6748wdFD'
@@ -15,6 +17,7 @@ csrf.init_app(shadowdashapp)
 
 
 @shadowdashapp.route('/')
+@login_required
 def shadowdash():
     comment_count_query = "SELECT count(*) FROM user"
     try:
@@ -31,7 +34,46 @@ def shadowdash():
     return render_template('dashpages/shadowfashion/index.html', template_data=template_dict)
 
 
+@shadowdashapp.route('/adminlogin')
+def adminlogin():
+    template_data_dict = {}
+    template_data_dict['error'] = None
+    return render_template('dashpages/shadowfashion/login.html', template_data=template_data_dict)
+
+
+@shadowdashapp.route('/login', methods=["POST"])
+def login():
+    template_data_dict = {}
+    user_or_email = request.form.get('uname_or_email', None)
+    password = request.form.get('account_password', None)
+
+    select_query = "SELECT id, username FROM admin_users WHERE username=%s AND password=%s"
+    args = (user_or_email, password)
+    try:
+        cursor, conn = get_connection_to(db_name='sfdash')
+        cursor.execute(select_query, args)
+        rows = cursor.fetchall()
+        if rows:
+            ((id, user_name),) = rows
+            session['user_name'] = user_name
+            session['login'] = True
+            return redirect(url_for('shadowdash'))
+        else:
+            template_data_dict['error'] = True
+    except Exception as e:
+        template_data_dict['error'] = True
+    return render_template('dashpages/shadowfashion/login.html', template_data=template_data_dict)
+
+
+@shadowdashapp.route('/logout')
+def logout():
+    session.pop('user_name', None)
+    session.pop('login', None)
+    return redirect(url_for('adminlogin'))
+
+
 @shadowdashapp.route('/shadowdashsignups')
+@login_required
 def shadowdashsignups():
     user_data_dict = {}
     signups_query = """SELECT u.id, ac.type, u.fname, u.sname, u.gender, u.dob, 
@@ -156,5 +198,5 @@ def shadowdashsignups():
 #     return json.dumps({"status": "OK"})
 
 
-# if __name__ == "__main__":
-#     shadowdashapp.run('0.0.0.0', '9879')
+if __name__ == "__main__":
+    shadowdashapp.run('0.0.0.0', '9879')
