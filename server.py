@@ -198,5 +198,5 @@ def shadowdashsignups():
 #     return json.dumps({"status": "OK"})
 
 
-if __name__ == "__main__":
-    shadowdashapp.run('0.0.0.0', '9879')
+# if __name__ == "__main__":
+#     shadowdashapp.run('0.0.0.0', '9879')
